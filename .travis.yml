@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build -t $DOCKER_USER/provisioning .
+
+deploy:
+  - provider: script
+    script: docker login -u="$DOCKER_USER" -p="$DOCKER_PASS" && docker push "$DOCKER_USER/provisioning" && docker logout
+    on:
+      branch: master
