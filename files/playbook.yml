@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: no
+  remote_user: arran
+  vars:
+    env:
+       HI: test3
+  tasks:
+    - shell: echo $HI > hello-world.txt
+      environment:
+         HI: test1
+    - shell: echo $HI >> hello-world.txt
+      environment: "{{env}}"

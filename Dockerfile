@@ -8,6 +8,9 @@ ENV PLAYBOOK_LOCATION /ansible/files/
 ADD ./files /ansible/files
 
 RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-add-repository ppa:ansible/ansible && \
+    apt-get update && \
     apt-get install -y ssh ansible && \
     mkdir -p /ansible/files && \
     adduser --disabled-password --gecos "ansible" --home /ansible --no-create-home ansible && \
