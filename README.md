@@ -34,7 +34,24 @@ $ docker exec -u 0 -it <CONTAINER ID> /bin/bash
 ```
 ## Execute adhoc commands through the container
 
+### Using the built image described above
+
 ```
 $ docker run  --rm  -v ~/.ssh:/ssh --env-file .env provisioning "ansible-playbook files/playbook.yml -i files/hosts && ssh docker-node 'cat hello-world.txt'"
 ```
 
+### using the latest pre-built image available on docker-hub
+
+```
+$ docker run  --rm  -v ~/.ssh:/ssh --env-file .env arranbartish/provisioning "ansible-playbook files/playbook.yml -i files/hosts && ssh docker-node 'cat hello-world.txt'"
+```
+
+The above command will execute using the package "default" inventory and playbook in the image.
+
+### Customizing the process
+
+You can mount custom inventory and playbooks in a volume and use them from the same image.
+
+```
+$ docker run  --rm  -v ~/.ssh:/ssh -v ~/dev/provisioning/files:/files --env-file .env arranbartish/provisioning "ansible-playbook /files/playbook.yml -i /files/hosts && ssh docker-node 'cat hello-world.txt'"
+```
